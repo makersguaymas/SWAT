@@ -59,24 +59,11 @@ void setup() {
 void loop() {
 
   uint8_t i;
+
+  fuga();
+  parar();
+  delay(2000);
   
-  // motorIzq->run(FORWARD);
-  // motorDer->run(BACKWARD);
-  // motorIzq->setSpeed(100);  
-  // motorDer->setSpeed(100);
-
-  mirarAlFrente();
-  delay(3000);
-
-  // rota el servo motor de 0 a 120 grados
-  mirarIzquierda();
-  delay(3000);
-
-  // rota el servo motor de 120 a 0 grados
-  mirarDerecha();
-  delay(3000);
-
-  mirarAlFrente();
 }
 
 /*
@@ -100,7 +87,7 @@ void mirarAlFrente(){
 // Funcion para mover el servo hacia la izquierda
 void mirarIzquierda(){
   
-  for(int i=0;i<=120;i++){  
+  for(int i=60;i>0;i--){ //60 -> 0  
     myServo.write(i);
     delay(30);
     distancia = calcularDistancia();// Llama a la funcion calcularDistancia cada vez que el servo avanza un grado
@@ -113,7 +100,7 @@ void mirarIzquierda(){
 // Funcion para mover el servo hacia la derecha
 void mirarDerecha(){
 
-  for(int i=120;i>0;i--){  
+  for(int i=60;i<=120;i++){  //60 -> 120
     myServo.write(i);
     delay(30);
     distancia = calcularDistancia();
@@ -129,4 +116,48 @@ void mirarDerecha(){
 * FUNCIONES DEL MOTOR SHIELD
 *
 */
+
+void avanzar(){
+  motorIzq->run(FORWARD);
+  motorDer->run(FORWARD);
+  motorIzq->setSpeed(100);  
+  motorDer->setSpeed(100);
+}
+
+void retroceder(){
+  motorIzq->run(BACKWARD);
+  motorDer->run(BACKWARD);
+  motorIzq->setSpeed(100);  
+  motorDer->setSpeed(100);
+}
+
+void parar(){
+  motorIzq->setSpeed(0);  
+  motorDer->setSpeed(0);
+}
+
+void girarIzquierda(){
+  motorDer->run(FORWARD);
+  motorIzq->run(BACKWARD);
+  motorDer->setSpeed(50);
+  motorIzq->setSpeed(50);
+  delay(1500);
+}
+
+void girarDerecha(){
+  motorIzq->run(FORWARD);
+  motorDer->run(BACKWARD);
+  motorIzq->setSpeed(50);
+  motorDer->setSpeed(50);
+  delay(1500);
+
+}
+
+void fuga(){
+  motorIzq->run(FORWARD);
+  motorDer->run(BACKWARD);
+  motorIzq->setSpeed(50);
+  motorDer->setSpeed(50);
+  delay(2000);
+}
 
