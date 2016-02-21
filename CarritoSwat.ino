@@ -21,7 +21,7 @@ const int trigPin = 6;
 const int echoPin = 5;
 
 //Distancia maxima a la que funcionara el sensor ultrasonico
-#define DISTANCIA_MAXIMA 20
+#define DISTANCIA_MAXIMA 15
 
 // Variables
 int distancia;
@@ -62,9 +62,25 @@ void setup() {
 void loop() {
 
   uint8_t i;
-
-  //TODO: AÑADIR ALGORITMO
-  
+  Serial.println(calcularDistancia());
+  //TODO: ALGORITMO
+  mirarAlFrente();
+  avanzar();
+  if (distancia != 0) {
+    parar();
+    delay(1000);
+    mirarDerecha();
+    if(distancia != 0){
+      mirarIzquierda();
+      if(distancia != 0){
+        fuga();
+      }else{
+          girarIzquierda();
+       }
+    }else{
+      girarDerecha();
+    }
+  }
 }
 
 /*
@@ -75,41 +91,29 @@ void loop() {
 
 // Funcion para calcular la distancia a la que se encuentra un objetos (si lo hubiera)
 int calcularDistancia(){ 
+  distancia = sonar.ping_cm();
+  return distancia;
   
+}
+
+// Funcion para mirar al frente
+int mirarAlFrente(){
+  myServo.write(60);
   distancia = sonar.ping_cm();
   return distancia;
 }
 
-// Funcion para mirar al frente
-void mirarAlFrente(){
-  myServo.write(60);
-}
-
 // Funcion para mover el servo hacia la izquierda
-void mirarIzquierda(){
-  
-  for(int i=60;i>0;i--){ //60 -> 0  
-    myServo.write(i);
-    delay(30);
-    distancia = calcularDistancia();// Llama a la funcion calcularDistancia cada vez que el servo avanza un grado
-    Serial.print(i); // Envia el grado actual al Serial Port
-    Serial.print(":"); // Se envia un carater especial para separar el valor de los grados y la distancia
-    Serial.print(distancia); // Se envia la distancia al Serial Port
-    Serial.print(".");
-  }
+int mirarIzquierda(){
+  myServo.write(0);
+  distancia = sonar.ping_cm();
+  return distancia;
 }
 // Funcion para mover el servo hacia la derecha
-void mirarDerecha(){
-
-  for(int i=60;i<=120;i++){  //60 -> 120
-    myServo.write(i);
-    delay(30);
-    distancia = calcularDistancia();
-    Serial.print(i);
-    Serial.print(":");
-    Serial.print(distancia);
-    Serial.print(".");
-  }
+int mirarDerecha(){
+  myServo.write(120);
+  distancia = sonar.ping_cm();
+  return distancia;
 }
 
 /*
@@ -166,4 +170,6 @@ void fuga(){
   motorDer->setSpeed(50);
   delay(2000);
 }
+
+
 
