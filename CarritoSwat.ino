@@ -53,6 +53,9 @@ void setup() {
   // Encendemos los motores
   motorIzq->run(RELEASE);
   motorDer->run(RELEASE);
+
+  // Apuntamos el sensor al frente
+  mirarAlFrente();
   
   Serial.println("Carrito SWAT ACTIVADO!!");
 }
@@ -60,9 +63,7 @@ void loop() {
 
   uint8_t i;
 
-  fuga();
-  parar();
-  delay(2000);
+  //TODO: AÑADIR ALGORITMO
   
 }
 
@@ -116,7 +117,7 @@ void mirarDerecha(){
 * FUNCIONES DEL MOTOR SHIELD
 *
 */
-
+//Funcion basica para avanzar
 void avanzar(){
   motorIzq->run(FORWARD);
   motorDer->run(FORWARD);
@@ -124,6 +125,7 @@ void avanzar(){
   motorDer->setSpeed(100);
 }
 
+//Funcion basica para retroceder
 void retroceder(){
   motorIzq->run(BACKWARD);
   motorDer->run(BACKWARD);
@@ -131,11 +133,13 @@ void retroceder(){
   motorDer->setSpeed(100);
 }
 
+//Funcion basica para detenerse
 void parar(){
   motorIzq->setSpeed(0);  
   motorDer->setSpeed(0);
 }
 
+//Funcion basica para girar a la izquierda
 void girarIzquierda(){
   motorDer->run(FORWARD);
   motorIzq->run(BACKWARD);
@@ -144,6 +148,7 @@ void girarIzquierda(){
   delay(1500);
 }
 
+//Funcon basica para girar a la derecha
 void girarDerecha(){
   motorIzq->run(FORWARD);
   motorDer->run(BACKWARD);
@@ -153,6 +158,7 @@ void girarDerecha(){
 
 }
 
+//Funcion basica para correr por donde veniamos D:
 void fuga(){
   motorIzq->run(FORWARD);
   motorDer->run(BACKWARD);
