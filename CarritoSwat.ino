@@ -43,8 +43,8 @@ void setup() {
   //AFMS.begin(1000);  // o puede usar una diferente, como 1KHz
   
   // Indicamos la velocidad inicial, desde 0 (apagado) hasta 255 (maxima velocidad)
-  motorIzq->setSpeed(100);
-  motorDer->setSpeed(100);
+  motorIzq->setSpeed(200);
+  motorDer->setSpeed(200);
 
   //Indicamos la direccion hacia donde se empezara a mover
   motorIzq->run(FORWARD);
@@ -70,15 +70,22 @@ void loop() {
     parar();
     delay(1000);
     mirarDerecha();
+    delay(1000);
     if(distancia != 0){
       mirarIzquierda();
+      delay(1000);
       if(distancia != 0){
+        retroceder()
+        delay(1000);
         fuga();
+        delay(1000);
       }else{
           girarIzquierda();
+          delay(1000);
        }
     }else{
       girarDerecha();
+      delay(1000);
     }
   }
 }
@@ -125,16 +132,16 @@ int mirarDerecha(){
 void avanzar(){
   motorIzq->run(FORWARD);
   motorDer->run(FORWARD);
-  motorIzq->setSpeed(100);  
-  motorDer->setSpeed(100);
+  motorIzq->setSpeed(200);  
+  motorDer->setSpeed(200);
 }
 
 //Funcion basica para retroceder
 void retroceder(){
   motorIzq->run(BACKWARD);
   motorDer->run(BACKWARD);
-  motorIzq->setSpeed(100);  
-  motorDer->setSpeed(100);
+  motorIzq->setSpeed(200);  
+  motorDer->setSpeed(200);
 }
 
 //Funcion basica para detenerse
